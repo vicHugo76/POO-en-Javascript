@@ -67,6 +67,41 @@ const jared = {
 }
 
 // Programacion Orientada a Objetos
+class Classes {
+  constructor(clase = []) {
+    this.clase = clase;
+  }
+}
+
+const listClass = [
+
+];
+const listClasses = new Classes(listClass);
+class Course {
+  constructor({
+    name,
+    classes = []
+  }) {
+    this.name = name;
+    this.classes = classes;
+  }
+}
+
+const cursoProgBasica = new Course({
+  name: 'Curso Gratis de Programación Básica',
+  classes: listClass
+});
+
+const cursoDefinitivoHTMLCSS = new Course({
+  name: 'Curso Definitivo de HTML y CSS',
+  classes: []
+});
+
+const cursoPracticoHTMLCSS = new Course({
+  name: 'Curso Práctico de HTML y CSS',
+  classes: []
+});
+
 class LearningPath {
   constructor({
     name,
@@ -75,30 +110,58 @@ class LearningPath {
     this.name = name;
     this.courses = courses;
   }
-  addCourses(...course) {
-    this.courses.push(...course);
-  }
+  // addCourses(...course) {
+  //   this.courses.push(...course);
+  // }
 }
 
-const escuelaWeb = new LearningPath({name: 'Escuela de Desarrollo Web'});
-escuelaWeb.addCourses(
-  'Curso Definitivo de HTML y CSS',
-  'Curso Práctico de HTML y CSS',
-  'Curso de Responsive Design',
-  'Curso de Sistemas de Diseño'
-);
-const escuelaVgs = new LearningPath({name: 'Escuela de Videojuegos'});
-escuelaVgs.addCourses(
-  'Curso de Introducción a la Producción de Videojuegos',
-  'Curso de Unreal Engine',
-  'Curso de Unity 3D'
-);
-const escuelaAF = new LearningPath({name: 'Escuela de Astrofísica'});
-escuelaAF.addCourses(
-  'Curso de Física',
-  'Curso de Astronomía',
-  'Curso de Física Cuántica'
-);
+const escuelaWeb = new LearningPath({
+  name: 'Escuela de Desarrollo Web',
+  courses: [
+    cursoProgBasica,
+    cursoDefinitivoHTMLCSS,
+    cursoPracticoHTMLCSS,
+    'Curso de Responsive Design',
+    'Curso de Sistemas de Diseño'    
+  ]
+});
+
+// escuelaWeb.addCourses(
+//   'Curso Definitivo de HTML y CSS',
+//   'Curso Práctico de HTML y CSS',
+//   'Curso de Responsive Design',
+//   'Curso de Sistemas de Diseño'
+// );
+
+const escuelaVgs = new LearningPath({
+  name: 'Escuela de Videojuegos',
+  courses: [
+    'Curso de Introducción a la Producción de Videojuegos',
+    'Curso de Unreal Engine',
+    'Curso de Unity 3D'
+  ]
+});
+
+// escuelaVgs.addCourses(
+//   'Curso de Introducción a la Producción de Videojuegos',
+//   'Curso de Unreal Engine',
+//   'Curso de Unity 3D'
+// );
+
+const escuelaAF = new LearningPath({
+  name: 'Escuela de Astrofísica',
+  courses: [
+    'Curso de Física',
+    'Curso de Astronomía',
+    'Curso de Física Cuántica'
+  ]
+});
+
+// escuelaAF.addCourses(
+//   'Curso de Física',
+//   'Curso de Astronomía',
+//   'Curso de Física Cuántica'
+// );
 
 class Student {
   constructor ({
