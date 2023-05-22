@@ -109,11 +109,6 @@ export class PlatziClass {
   }
 }
 
-
-
-
-
-
 class Course {
   constructor({
     name,
