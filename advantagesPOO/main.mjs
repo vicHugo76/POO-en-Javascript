@@ -76,14 +76,60 @@ class Classes {
 const listClass = [
 
 ];
+
 const listClasses = new Classes(listClass);
+
+
+
+
+
+function videoPlay(id) {
+  const urlSecret = 'https://platziultrasecretmasquelanasa.com' + id;
+  console.log('Se esta reproduciendo desde la URL:', urlSecret);  
+}
+
+function videoPause(id) {
+  const urlSecret = 'https://platziultrasecretmasquelanasa.com' + id;
+  console.log('Pausamos la URL:', urlSecret);  
+}
+
+export class PlatziClass {
+  constructor ({
+    name,
+    videoID
+  }) {
+    this.name = name;
+    this.videoID = videoID;
+  }
+  playVideo() {
+    videoPlay(this.videoID);
+  }
+  pauseVideo() {
+    videoPause(this.videoID);
+  }
+}
+
+
+
+
+
+
 class Course {
   constructor({
     name,
     classes = []
   }) {
-    this.name = name;
+    this._name = name; // Escondemos el nombre del curso
     this.classes = classes;
+  }
+  get name() {
+    return this._name;
+  }
+  set name(newName) {
+    if (newName === 'Curso Malito de Programación Básica')
+      console.error('Web... No!');
+    else 
+      this._name = newName;
   }
 }
 
@@ -91,6 +137,8 @@ const cursoProgBasica = new Course({
   name: 'Curso Gratis de Programación Básica',
   classes: listClass
 });
+
+// cursoProgBasica.name = '';
 
 const cursoDefinitivoHTMLCSS = new Course({
   name: 'Curso Definitivo de HTML y CSS',
