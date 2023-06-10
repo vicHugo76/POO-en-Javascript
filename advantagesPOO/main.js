@@ -93,7 +93,7 @@ function videoPause(id) {
   console.log('Pausamos la URL:', urlSecret);  
 }
 
-export class PlatziClass {
+class PlatziClass {
   constructor ({
     name,
     videoID
@@ -112,10 +112,14 @@ export class PlatziClass {
 class Course {
   constructor({
     name,
-    classes = []
+    classes = [],
+    isFree = false,
+    lang = 'Spanish'
   }) {
     this._name = name; // Escondemos el nombre del curso
     this.classes = classes;
+    this.isFree = isFree;
+    this.lang = lang;
   }
   get name() {
     return this._name;
@@ -130,6 +134,7 @@ class Course {
 
 const cursoProgBasica = new Course({
   name: 'Curso Gratis de Programación Básica',
+  isFree: true,
   classes: listClass
 });
 
@@ -142,6 +147,7 @@ const cursoDefinitivoHTMLCSS = new Course({
 
 const cursoPracticoHTMLCSS = new Course({
   name: 'Curso Práctico de HTML y CSS',
+  lang: 'English',
   classes: []
 });
 
@@ -206,6 +212,8 @@ const escuelaAF = new LearningPath({
 //   'Curso de Física Cuántica'
 // );
 
+
+
 class Student {
   constructor ({
     name,
@@ -230,7 +238,43 @@ class Student {
   }
 }
 
-const victor = new Student({
+class FreeStudent extends Student {
+  constructor(props) {
+    super(props);
+  }
+  approvedCourse(newCourse) {
+    if (newCourse.isFree) {
+      this.approvedCourses.push(newCourse);
+    } else {
+      console.warn('Lo sentimos, ' + this.name + ', solo puedes tomar curso abiertos');
+    }
+  }
+}
+
+class BasicStudent extends Student {
+  constructor(props) {
+    super(props);
+  }
+  approvedCourse(newCourse) {
+    if (newCourse.lang !== 'English') {
+      this.approvedCourses.push(newCourse);
+    } else {
+      console.warn('Lo sentimos, ' + this.name + ', no puedes tomar curso en ingles');
+    }
+  }
+}
+
+class ExpertStudent extends Student {
+  constructor(props) {
+    super(props);
+  }
+  approvedCourse(newCourse) {
+    this.approvedCourses.push(newCourse);
+  }
+}
+
+
+const victor = new FreeStudent({
   name: 'Victor Hugo',
   email: 'ortizrvh@gmail.com',
   username: 'vHugo',
@@ -241,7 +285,7 @@ const victor = new Student({
   ]
 })
 
-const oliver = new Student({
+const oliver = new BasicStudent({
   name: 'Oliver Jared',
   email: 'ortizgoj@gmail.com',
   username: 'oJared',
