@@ -1,3 +1,5 @@
+// Funcion de deepCopy
+
 // const obj1 = {
 //   a: 'a',
 //   b: 'b',
@@ -43,29 +45,68 @@ function deepCopy(subject) {
   return copySubject;
 }
 
-const studentBase = {
-  name: undefined,
-  email: undefined,
-  age: undefined,
-  approvedCourses: undefined,
-  learningPaths: undefined,
-  socialMedia: {
-    facebook: undefined,
-    instagram: undefined,
-    twitter: undefined
-  }
+// **** Abstraccion con objetos literales ****
+
+// const studentBase = {
+//   name: undefined,
+//   email: undefined,
+//   age: undefined,
+//   approvedCourses: undefined,
+//   learningPaths: undefined,
+//   socialMedia: {
+//     facebook: undefined,
+//     instagram: undefined,
+//     twitter: undefined
+//   }
+// }
+
+// const victor = deepCopy(studentBase);
+
+// // De esta manera definimos propiedad por propiedad de un objeto 
+// // Object.defineProperty(victor, 'name', {
+// //   value: 'Victor Hugo',
+// //   configurable: false
+// // });
+
+// // Con este metodo lo que hacemos es proteger todas las propiedades del objeto para que no puedan ser borradas
+// Object.seal(victor);
+
+// console.log(Object.isSealed(victor)); // Verificamos si las propiedades del objeto estan bloqueadas
+// console.log(Object.isFrozen(victor)); // Verificamos si el valor de las propiedades estan protegidas
+
+// **** Factory pattern y RORO ****
+
+function requiredParam(param) {
+  throw new Error(param + ' es obligatorio');
 }
 
-const victor = deepCopy(studentBase);
+function createStudent({
+    name = requiredParam('name'), // Parametro Obligatorio o error
+    age,
+    email = requiredParam('email'), // Parametro Obligatorio o error
+    facebook,
+    instagram,
+    twitter,
+    approvedCourses = [],
+    learningPaths = []
+  } = {}) {
+  return {
+    name,
+    age,
+    email,
+    approvedCourses,
+    learningPaths,
+    socialMedia: {
+      facebook,
+      instagram,
+      twitter
+    }
+  };
+}
 
-// De esta manera definimos propiedad por propiedad de un objeto 
-// Object.defineProperty(victor, 'name', {
-//   value: 'Victor Hugo',
-//   configurable: false
-// });
-
-// Con este metodo lo que hacemos es proteger todas las propiedades del objeto para que no puedan ser borradas
-Object.seal(victor);
-
-console.log(Object.isSealed(victor)); // Verificamos si las propiedades del objeto estan bloqueadas
-console.log(Object.isFrozen(victor)); // Verificamos si el valor de las propiedades estan protegidas
+const victor = createStudent({
+  name: 'Victor Hugo',
+  age: 47,
+  email: 'ortizrvh@gmail.com',
+  instagram:'vhor76',
+});
