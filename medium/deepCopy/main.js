@@ -74,24 +74,26 @@ function deepCopy(subject) {
 // console.log(Object.isSealed(victor)); // Verificamos si las propiedades del objeto estan bloqueadas
 // console.log(Object.isFrozen(victor)); // Verificamos si el valor de las propiedades estan protegidas
 
-// **** Factory pattern y RORO ****
+// **** Factory pattern, module pattern, namespaces y RORO ****
 
 function requiredParam(param) {
   throw new Error(param + ' es obligatorio');
 }
 
 function createStudent({
-    name = requiredParam('name'), // Parametro Obligatorio o error
-    age,
-    email = requiredParam('email'), // Parametro Obligatorio o error
-    facebook,
-    instagram,
-    twitter,
-    approvedCourses = [],
-    learningPaths = []
-  } = {}) {
-  return {
-    name,
+  name = requiredParam('name'), // Parametro Obligatorio o error
+  age,
+  email = requiredParam('email'), // Parametro Obligatorio o error
+  facebook,
+  instagram,
+  twitter,
+  approvedCourses = [],
+  learningPaths = []
+} = {}) {
+  const private = {
+    '_name': name,
+  };
+  const public = {
     age,
     email,
     approvedCourses,
@@ -100,8 +102,27 @@ function createStudent({
       facebook,
       instagram,
       twitter
-    }
+    },
+    // Forma de proteger una propiedad para no ser modifada solo mediante la funcion changeName()
+    readName() {
+      return private['_name'];
+    },
+    changeName(newName) {
+      // if (newName) {
+      private['_name'] = newName;
+      // }
+    },
   };
+  // Forma de proteger cambios en las propiedades o metodos del objeto con la diferencia que al utilizar poliformismo no se modificaran los valores de la propiedad padre donde se apliquen
+  Object.defineProperty(public, 'readName', {
+    writable: false,
+    configurable: false
+  });
+  Object.defineProperty(public, 'changeName', {
+    writable: false,
+    configurable: false
+  });
+  return public;
 }
 
 const victor = createStudent({
