@@ -104,24 +104,36 @@ function createStudent({
       twitter
     },
     // Forma de proteger una propiedad para no ser modifada solo mediante la funcion changeName()
-    readName() {
+    // readName() {
+    //   return private['_name'];
+    // },
+    // changeName(newName) {
+    //   // if (newName) {
+    //   private['_name'] = newName;
+    //   // }
+    // },
+    
+    // Utilizando getters y setters
+    get name() {
       return private['_name'];
     },
-    changeName(newName) {
-      // if (newName) {
-      private['_name'] = newName;
-      // }
-    },
+    set name(newName) {
+      if (newName.length !== 0) {
+        private['_name'] = newName;
+      } else {
+        console.warn('Tu nombre debe tener al menos 1 caracter')
+      }
+    }
   };
   // Forma de proteger cambios en las propiedades o metodos del objeto con la diferencia que al utilizar poliformismo no se modificaran los valores de la propiedad padre donde se apliquen
-  Object.defineProperty(public, 'readName', {
-    writable: false,
-    configurable: false
-  });
-  Object.defineProperty(public, 'changeName', {
-    writable: false,
-    configurable: false
-  });
+  // Object.defineProperty(public, 'readName', {
+  //   writable: false,
+  //   configurable: false
+  // });
+  // Object.defineProperty(public, 'changeName', {
+  //   writable: false,
+  //   configurable: false
+  // });
   return public;
 }
 
